@@ -86,5 +86,24 @@ try {
 }
 });
 
+router.get('/user', ConnectToDB, AuthUser, async function(req, res){
+  try {
+    const usuarioLogado = req.userJwt.id;
+    const respDB = await User.findOne({_id: usuarioLogado});
+      if(!respDB){
+        throw new Error("Usuario não encontrado!");
+      }
+
+      res.status(200).json({
+        status: "Okay",
+        statusMessage: "A tarefa foi atualizada com sucesso.",
+        menssage: respDB,
+      })
+
+  } catch (error) {
+    return handleError(res,error);
+  }
+  });
+
 
 module.exports = router;

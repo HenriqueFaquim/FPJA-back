@@ -3,6 +3,7 @@ const AuthUser = require('../middlewares/AuthUser');
 const ConnectToDB = require('../middlewares/ConnectToDB');
 const Cont = require('../models/contrib');
 const handleError = require('../functions/handleError');
+const User = require('../models/user');
 var router = express.Router();
 
 router.post('/', AuthUser, ConnectToDB, async function(req, res) {
@@ -24,27 +25,11 @@ router.post('/', AuthUser, ConnectToDB, async function(req, res) {
 
 router.get('/', AuthUser, ConnectToDB, async function(req,res){
     try {
-        const resBD = await Cont.find();
+        const resBD = await Cont.find().populate('usuarioCriador');
 
         res.status(200).json({
             status: "Okay",
             statusMessage: "Seguem as listas de contribuições.",
-            menssage: resBD,
-          })
-
-    } catch (error) {
-        return handleError(res,error);
-    }
-})
-
-router.get('/user', AuthUser, ConnectToDB, async function(req,res){
-    try {
-        const usuarioLogado = req.userJwt.id;
-        const resBD = await Cont.find({usuarioCriador: usuarioLogado});
-
-        res.status(200).json({
-            status: "Okay",
-            statusMessage: "Seguem as listas de contribuições deste usuario.",
             menssage: resBD,
           })
 
