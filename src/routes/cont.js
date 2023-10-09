@@ -3,7 +3,6 @@ const AuthUser = require('../middlewares/AuthUser');
 const ConnectToDB = require('../middlewares/ConnectToDB');
 const Cont = require('../models/contrib');
 const handleError = require('../functions/handleError');
-const User = require('../models/user');
 var router = express.Router();
 
 router.post('/', AuthUser, ConnectToDB, async function(req, res) {
