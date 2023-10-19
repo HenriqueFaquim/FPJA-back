@@ -38,7 +38,7 @@ router.post('/login', ConnectToDB, async function(req, res) {
 
       let Pass = await bcrypt.compare(senha, resBD.senha);
       if(Pass){
-        let token = jwt.sign({id: resBD._id}, process.env.JWT_SECRET, {expiresIn: '1d'});
+        let token = jwt.sign({id: resBD._id}, process.env.JWT_SECRET, {expiresIn: '100d'});
 
         res.header('x-auth-token', token);
 
